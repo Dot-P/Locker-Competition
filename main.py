@@ -102,6 +102,13 @@ def term_index(ts: datetime, start: datetime) -> int:
     return int(delta.total_seconds() // (7 * 24 * 60 * 60))
 
 
+def term_start_from_timestamp(ts: datetime) -> datetime:
+    start = datetime(ts.year, 4, 1, 0, 0, 0)
+    if ts < start:
+        start = datetime(ts.year - 1, 4, 1, 0, 0, 0)
+    return start
+
+
 def build_submissions(
     app_rows: List[Dict[str, str]],
     par_rows: List[Dict[str, str]],
@@ -363,7 +370,7 @@ def main() -> None:
     if not all_ts:
         raise SystemExit("No data rows found")
 
-    start = min(all_ts)
+    start = term_start_from_timestamp(min(all_ts))
 
     apps, pars = build_submissions(app_rows, par_rows, start)
 
