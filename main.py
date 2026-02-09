@@ -161,7 +161,10 @@ def apply_input_validation(sub: Submission) -> Optional[str]:
         return "E1"
 
     if sub.role == "app":
-        if sub.has_partner not in ("共同利用者あり", "共同利用者なし"):
+        if sub.has_partner not in (
+            "共同利用者あり",
+            "共同利用者なし (2階・3階のロッカーは使用できません)",
+        ):
             return "E1"
         if sub.floor is None:
             return "E1"
