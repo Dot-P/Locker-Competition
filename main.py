@@ -165,6 +165,8 @@ def apply_input_validation(sub: Submission) -> Optional[str]:
             return "E1"
         if sub.floor is None:
             return "E1"
+        if sub.floor in (2, 3) and sub.has_partner != "共同利用者あり":
+            return "E1"
         if sub.has_partner == "共同利用者あり":
             if not sub.partner_id or not sub.partner_name:
                 return "E1"
